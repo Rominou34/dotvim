@@ -10,17 +10,20 @@ set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
 set guifont=Consolas:h10
 colorscheme ron
+set updatetime=250
+
+if !has('gui_running')
+  set t_Co=256
+endif
+
 " F7 - F8 to switch tabs
 nnoremap <F7> gT
 nnoremap <F8> gt
 
-" When you open a parenthesis, closes it then put the cursor inside
-inoremap ( ()<left>
-
 let mapleader=" "
 
 " NERDTree
-"map <leader>s :source ~/.vimrc<CR>
+map <leader>s :source ~/.vimrc<CR>
 let NERDTreeMapActivateNode='<right>'
 nmap <leader>n :NERDTreeToggle<CR>
 nmap <leader>j :NERDTreeFind<CR>
@@ -40,6 +43,9 @@ set foldnestmax=10
 set nofoldenable
 set foldlevel=2
 
-if !has('gui_running')
-  set t_Co=256
-endif
+" Vim Indent Guides
+let g:indent_guides_auto_colors = 0
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesIdd guibg=darkgrey ctermbg=darkgrey
+hi IndentGuidesOdd ctermbg=darkgrey
+set ts=4 sw=4 et
+let g:indent_guides_guide_size = 1
