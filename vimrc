@@ -1,18 +1,21 @@
 execute pathogen#infect()
+
 filetype plugin indent on
+syntax on
+colorscheme ron
+
 set tabstop=4
 set shiftwidth=4
 set softtabstop=0
 set noexpandtab
 set directory=~/.vim/swap,.
-syntax on
 set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
 set fileformats=dos,unix
 set guifont=Consolas:h10
-colorscheme ron
 set updatetime=250
 set hlsearch
+set nofixendofline
 
 if !has('gui_running')
   set t_Co=256
@@ -26,6 +29,10 @@ autocmd CursorHold,CursorHoldI,FocusGained,BufEnter * checktime
 " F7 - F8 to switch tabs
 nnoremap <F7> gT
 nnoremap <F8> gt
+
+"
+" LEADER KEY CONFIGURATION
+"
 
 let mapleader=" "
 
@@ -46,12 +53,16 @@ nnoremap <C-Left> <C-W>10<
 nnoremap <CR> :noh<CR><CR>
 nnoremap <leader>s :source ~/.vimrc<CR>
 
-" Space + d to open the log file for my work application
-nnoremap <leader>d :e /c/uwAmp/www/lmbv7_new/lmbv7/www/debugar.log<CR>
-" Space + q to delete the whole file content
-nnoremap <leader>q ggVGd
+" Space + d to delete the whole file content
+nnoremap <leader>d ggVGd
 
-" CtrlP
+" Space + t to open a new tab with startify
+nnoremap <Leader>t :tabnew<CR>:Startify<CR>
+
+"
+" PLUGINS CONFIGURATION
+"
+
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
@@ -76,3 +87,34 @@ set foldlevel=2
 " Vim Indent Guides
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd ctermbg=darkgrey
+
+" Startify bookmarks
+let g:startify_bookmarks = [
+      \ { 'v': '~/.vimrc' },
+	  \ { 'd': '/c/uwAmp/www/lmbv7_new/lmbv7/www/debugar.log' }
+      \ ]
+let g:startify_transformations = [
+      \ ['.*vimrc$', 'vimrc'],
+	  \ ['/c/uwAmp/www/lmbv7_new/lmbv7/www/debugar.log', 'Debug AR']
+      \ ]
+let g:startify_change_to_dir          = 0
+let g:startify_change_to_vcs_root     = 0
+let g:startify_files_number           = 8
+let g:startify_fortune_use_unicode    = 1
+let g:startify_padding_left			  = 3
+
+" Lightline
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
+" NerdTree syntax highlighting
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
