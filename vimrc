@@ -2,7 +2,11 @@ execute pathogen#infect()
 
 filetype plugin indent on
 syntax on
+set background=dark
 colorscheme ron
+"let g:solarized_contrast = "high"
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans = 0
 
 set tabstop=4
 set shiftwidth=4
@@ -12,12 +16,15 @@ set directory=~/.vim/swap,.
 set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
 set fileformats=dos,unix
-set guifont=Consolas:h10
 set updatetime=250
 set hlsearch
 set nofixendofline
+set incsearch
 
-if !has('gui_running')
+"if !has('gui_running')
+"  set t_Co=256
+"endif
+if $TERM == "xterm-256color"
   set t_Co=256
 endif
 
@@ -25,6 +32,12 @@ endif
 autocmd CursorHold,CursorHoldI,FocusGained,BufEnter * checktime
 " autocmd FileChangedShellPost *
 "  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+" Automatically creates folds at startup
+set foldmethod=indent   
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
 
 " F7 - F8 to switch tabs
 nnoremap <F7> gT
@@ -53,11 +66,14 @@ nnoremap <C-Left> <C-W>10<
 nnoremap <CR> :noh<CR><CR>
 nnoremap <leader>s :source ~/.vimrc<CR>
 
-" Space + d to delete the whole file content
-nnoremap <leader>d ggVGd
+" Ctrl + A to select the whole file content
+nnoremap <C-a> ggvG$
 
 " Space + t to open a new tab with startify
 nnoremap <Leader>t :tabnew<CR>:Startify<CR>
+
+" Space + p to change the pwd to the directory of the current file
+nnoremap <Leader>p :cd %:p:h<CR>
 
 "
 " PLUGINS CONFIGURATION
@@ -78,12 +94,6 @@ let g:NERDTreeDirArrowCollapsible = 'v'
 " Automatically close if NERDTree is the only open window
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Automatically creates folds at startup
-set foldmethod=indent   
-set foldnestmax=10
-set nofoldenable
-set foldlevel=2
-
 " Vim Indent Guides
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd ctermbg=darkgrey
@@ -91,11 +101,16 @@ hi IndentGuidesOdd ctermbg=darkgrey
 " Startify bookmarks
 let g:startify_bookmarks = [
       \ { 'v': '~/.vimrc' },
-	  \ { 'd': '/c/uwAmp/www/lmbv7_new/lmbv7/www/debugar.log' }
+	  \ { 'd': '/c/uwAmp/www/lmbv7_new/lmbv7/www/debugar.log' },
+	  \ { 'l': '/c/uwAmp/www/lmbv7_new/lmbv7/www/' },
+	  \ { 'a': '/c/uwAmp/www/lmbv7_new/lmbv7/www/common/javascript/angular/components/searchEngine/' },
+	  \ { 'b': '/c/uwAmp/www/lmbv7_new/lmbv7/www/view/mvc/Admin/Standard/' },
+	  \ { 'c': '/c/uwAmp/www/lmbv7_new/lmbv7/www/common/javascript/angular/components/searchEngine/resultSelector' }
       \ ]
 let g:startify_transformations = [
       \ ['.*vimrc$', 'vimrc'],
-	  \ ['/c/uwAmp/www/lmbv7_new/lmbv7/www/debugar.log', 'Debug AR']
+	  \ ['/c/uwAmp/www/lmbv7_new/lmbv7/www/debugar.log', 'Debug AR'],
+	  \ ['/c/uwAmp/www/lmbv7_new/lmbv7/www/$', 'LMB v7']
       \ ]
 let g:startify_change_to_dir          = 0
 let g:startify_change_to_vcs_root     = 0
