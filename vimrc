@@ -1,11 +1,13 @@
 execute pathogen#infect()
 
+set pythondll=/c/Windows/System32/python27.dll
+
 filetype plugin indent on
 syntax on
-set background=dark
-colorscheme ron
-"let g:solarized_contrast = "high"
-"let g:solarized_termcolors=256
+set background=light
+colorscheme solarized
+let g:solarized_contrast = "normal"
+let g:solarized_termcolors=256
 "let g:solarized_termtrans = 0
 
 set tabstop=4
@@ -20,6 +22,7 @@ set updatetime=250
 set hlsearch
 set nofixendofline
 set incsearch
+set number
 
 "if !has('gui_running')
 "  set t_Co=256
@@ -75,6 +78,9 @@ nnoremap <Leader>t :tabnew<CR>:Startify<CR>
 " Space + p to change the pwd to the directory of the current file
 nnoremap <Leader>p :cd %:p:h<CR>
 
+" Space + w to close the file
+nnoremap <Leader>w :q!<CR>
+
 "
 " PLUGINS CONFIGURATION
 "
@@ -96,7 +102,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Vim Indent Guides
 let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd ctermbg=darkgrey
+hi IndentGuidesOdd ctermbg=white
 
 " Startify bookmarks
 let g:startify_bookmarks = [
@@ -133,3 +139,13 @@ let g:lightline = {
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
+
+" Twitvim
+let twitvim_browser_cmd = 'start chrome'
+let twitvim_count = 150
+nnoremap <Leader>1 :FriendsTwitter<CR>
+nnoremap <Leader>2 :MentionsTwitter<CR>
+nnoremap <Leader>3 :UserTwitter quiquiz27<CR>
+nnoremap <Leader>5 :PosttoTwitter<CR>
+nnoremap <Leader>8 :BPosttoTwitter<CR>
+

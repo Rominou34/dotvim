@@ -37,3 +37,12 @@
 [submodule "bundle/vim-fugitive"]
 	path = bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+[submodule "bundle/vim-snake"]
+	path = bundle/vim-snake
+	url = https://github.com/zyedidia/vim-snake.git
+[submodule "bundle/ale"]
+	path = bundle/ale
+	url = https://github.com/w0rp/ale.git
+[submodule "bundle/lightline-ale"]
+	path = bundle/lightline-ale
+	url = https://github.com/maximbaz/lightline-ale.git
