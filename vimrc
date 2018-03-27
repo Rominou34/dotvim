@@ -176,3 +176,9 @@ let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'lint
 
 " Leader + e to display the errors
 nnoremap <Leader>e :lopen<CR>
+
+" ctags.exe path
+let g:tagbar_ctags_bin = '/c/Users/arnaud.romain/Documents/ctags.exe'
+
+" F12 to toggle tagbar
+nmap <F12> :TagbarToggle<CR>
