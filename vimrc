@@ -85,8 +85,14 @@ nnoremap <Leader>w :q!<CR>
 " PLUGINS CONFIGURATION
 "
 
+" Control P
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+nnoremap <Leader>g :GitGutterToggle<CR>
+
+" GitGutter
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
 
 " NERDTree
 let NERDTreeMapActivateNode='<right>'
@@ -149,3 +155,24 @@ nnoremap <Leader>3 :UserTwitter quiquiz27<CR>
 nnoremap <Leader>5 :PosttoTwitter<CR>
 nnoremap <Leader>8 :BPosttoTwitter<CR>
 
+" Displaying the erros found by ale in lightline
+let g:lightline = {}
+
+let g:lightline.component_expand = {
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+
+let g:lightline.component_type = {
+      \     'linter_checking': 'left',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
+
+let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+
+" Leader + e to display the errors
+nnoremap <Leader>e :lopen<CR>
