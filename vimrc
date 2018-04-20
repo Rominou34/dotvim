@@ -130,17 +130,6 @@ let g:startify_files_number           = 8
 let g:startify_fortune_use_unicode    = 1
 let g:startify_padding_left			  = 3
 
-" Lightline
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
-      \ },
-      \ }
-
 " NerdTree syntax highlighting
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
@@ -154,9 +143,14 @@ nnoremap <Leader>2 :MentionsTwitter<CR>
 nnoremap <Leader>3 :UserTwitter quiquiz27<CR>
 nnoremap <Leader>5 :PosttoTwitter<CR>
 nnoremap <Leader>8 :BPosttoTwitter<CR>
+nnoremap <Leader>4 :UserTwitter crackmeupbot<CR>
 
-" Displaying the erros found by ale in lightline
+" Lightline config: Displays the erros found by ale and the current branch
 let g:lightline = {}
+
+let g:lightline.component_function = {
+      \  'gitbranch': 'gitbranch#name'
+      \ }
 
 let g:lightline.component_expand = {
       \  'linter_checking': 'lightline#ale#checking',
@@ -172,7 +166,11 @@ let g:lightline.component_type = {
       \     'linter_ok': 'left',
       \ }
 
-let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+let g:lightline.active = {
+      \   'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]],
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ }
 
 " Leader + e to display the errors
 nnoremap <Leader>e :lopen<CR>
@@ -182,3 +180,7 @@ let g:tagbar_ctags_bin = '/c/Users/arnaud.romain/Documents/ctags.exe'
 
 " F12 to toggle tagbar
 nmap <F12> :TagbarToggle<CR>
+
+" Lead + h to comment HTML, Lead + : (same key as /) to comment any language with /* */
+vnoremap <Leader>h x o<!--<ENTER>!--><ESC>P
+vnoremap <Leader>: x o/*<ENTER>*/<ESC>P
