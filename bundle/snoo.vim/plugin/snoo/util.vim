@@ -1,3 +1,87 @@
+function! snoo#util#parseSubreddit(res)
+	tabnew
+	setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+	" put = a:res
+
+	let json = json_decode(a:res)
+	if(has_key(json, 'data'))
+		if(has_key(json['data'],'children'))
+			for child in json['data']['children']
+				call snoo#util#parsePostLine(child.data)
+				" silent put = child['data']['title']
+			endfor
+		endif
+	endif
+
+	" silent put = string(json)
+
+	" let json = json_decode(a:res)
+	" for id in keys(json)
+		" silent put = json[id]
+	" endfor
+	" silent put = json
+endfunction
+
+function! snoo#util#parsePostLine(postLine)
+	" First line: Score and Title post
+	let l:firstline = a:postLine.score
+	let l:firstline .= "   "
+	let l:firstline .= a:postLine.title
+	silent put = l:firstline
+
+	" Selonde line: Number of comments, subreddit and NSFW badge
+	let l:secondline = "        ("
+	let l:secondline .= a:postLine.num_comments
+	let l:secondline .= " comments)    /r/"
+	let l:secondline .= a:postLine.subreddit
+	if (a:postLine.over_18)
+		let l:secondline .= "    NSFW"
+	endif
+	silent put = l:secondline
+
+	" Jump a line between posts
+	let l:thirdline = ""
+	silent put = l:thirdline
+endfunction
+
+function! snoo#util#highlight()
+	" Beautify the window with syntax highlighting.
+    if has("syntax") && exists("g:syntax_on")
+
+        " highlight default link twitterUser Identifier
+        highlight default link twitterTime String
+        highlight default link twitterTimeBar Ignore
+        highlight default link twitterTitle Title
+        highlight default link twitterTitleStar Ignore
+        highlight default link twitterLink Underlined
+        highlight default link twitterReply Label
+
+        syntax match postScoru /\[[0-9]*\]/
+
+        syntax match postScore /^[0-9]*/
+        syntax match numComments /\([0-9]* comments\)/
+        syntax match subreddit /\/r\/[a-zA-Z0-9_.-]*/
+
+        highlight default link postScore Label
+        highlight default link numComments Underlined
+        highlight default link subreddit Identifier
+    endif
+endfunction
+
+
+
+
+
+
+
+" BEYOND THIS COMMENT IT'S NOT TRULY UTILE
+
+
+
+
+
+
+
 function! s:tempname() abort
   return tr(tempname(),'\','/')
 endfunction
