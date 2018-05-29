@@ -1,7 +1,19 @@
-function! snoo#util#parseSubreddit(res)
+function! snoo#util#parseSubreddit(res, subreddit)
 	tabnew
 	setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+
+	nnoremap <buffer> <Leader>g :call GetPost()<CR>
+
 	" put = a:res
+	let l:subreddit_title = "=== "
+	let l:subreddit_title .= a:subreddit
+	let l:subreddit_title .= " ==="
+
+	silent put = l:subreddit_title
+
+	let l:empty = ""
+	silent put = l:empty
+	silent put = l:empty
 
 	let json = json_decode(a:res)
 	if(has_key(json, 'data'))
@@ -24,13 +36,18 @@ endfunction
 
 function! snoo#util#parsePostLine(postLine)
 	" First line: Score and Title post
-	let l:firstline = a:postLine.score
-	let l:firstline .= "   "
+	let l:firstline = a:postLine.id
+	let l:firstline .= "    "
 	let l:firstline .= a:postLine.title
+	if (a:postLine.is_self)
+		let l:firstline .= "  (self)"
+	endif
 	silent put = l:firstline
 
 	" Selonde line: Number of comments, subreddit and NSFW badge
-	let l:secondline = "        ("
+	let l:secondline = "          "
+	let l:secondline .= a:postLine.score
+	let l:secondline .= " points    ("
 	let l:secondline .= a:postLine.num_comments
 	let l:secondline .= " comments)    /r/"
 	let l:secondline .= a:postLine.subreddit
@@ -42,6 +59,15 @@ function! snoo#util#parsePostLine(postLine)
 	" Jump a line between posts
 	let l:thirdline = ""
 	silent put = l:thirdline
+endfunction
+
+function! snoo#util#parsePost(post)
+	tabnew
+	setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+	
+	let json = json_decode(a:post)
+	let l:header = json[0].kind
+	silent put = l:header
 endfunction
 
 function! snoo#util#highlight()
@@ -60,14 +86,22 @@ function! snoo#util#highlight()
 
         syntax match postScore /^[0-9]*/
         syntax match numComments /\([0-9]* comments\)/
-        syntax match subreddit /\/r\/[a-zA-Z0-9_.-]*/
+        syntax match selfLabel /\(self\)/
+        syntax match subredditName /\/r\/[a-zA-Z0-9_.-]*/
+        syntax match subredditTitle /===.*===/
+        syntax match nsfwLabel /NSFW/
 
         highlight default link postScore Label
-        highlight default link numComments Underlined
-        highlight default link subreddit Identifier
+        highlight default link numComments Comment
+        highlight default link selfLabel Comment
+        highlight default link subredditName Identifier
+        highlight default link subredditTitle Title
+        highlight default link nsfwLabel Title
     endif
 endfunction
 
+function! snoo#util#highlightPost()
+endfunction
 
 
 
