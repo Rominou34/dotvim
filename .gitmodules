@@ -73,3 +73,18 @@
 [submodule "bundle/vimproc.vim"]
 	path = bundle/vimproc.vim
 	url = https://github.com/Shougo/vimproc.vim.git
+[submodule "bundle/blayu.vim"]
+	path = bundle/blayu.vim
+	url = https://github.com/tjammer/blayu.vim.git
+[submodule "bundle/srcery-vim"]
+	path = bundle/srcery-vim
+	url = https://github.com/srcery-colors/srcery-vim.git
+[submodule "bundle/unite.vim"]
+	path = bundle/unite.vim
+	url = https://github.com/shougo/unite.vim
+[submodule "bundle/nerdtree-git-plugin"]
+	path = bundle/nerdtree-git-plugin
+	url = https://github.com/xuyuanp/nerdtree-git-plugin
+[submodule "bundle/gv.vim"]
+	path = bundle/gv.vim
+	url = https://github.com/junegunn/gv.vim

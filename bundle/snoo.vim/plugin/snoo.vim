@@ -1,56 +1,8 @@
 command! -nargs=* Snoo call GetSubreddit(<f-args>)
+command! -nargs=* SnooSearch call SearchSubreddit(<f-args>)
 
-" /!\
-" @TODO DELETE
-" /!\
-function! GetMain(...)
-	" --- let l:cmd = '%!curl --silent '
-	" --- let Callback = function("Echo")
-
-	let l:url = "https://www.reddit.com/r/madeinabyss.json"
-	let l:reddit_username = "AyXiit34"
-
-	" --- let l:url = "https://jsonplaceholder.typicode.com/posts/1"
-	" --- call snoo#async#get(l:url, Callback)
-	" --- let l:cmd .= l:url
-
-	" --- Test buffer
-	
-	" --- redir => result
-	" --- silent execute "%!curl -s ".l:url
-	" --- sleep 2000m
-	" --- redir END
-	" --- redir => result
-
-	let result = system('curl -s '.l:url.' -H "User-Agent: Snoo.vim, used by /u/AyXiit34"')
-	sleep 2000m
-	if empty(result)
-    	echoerr "No output"
-  	else
-    	call snoo#util#parseSubreddit(result)
-    	
-    	" --- use "new" instead of "tabnew" below if you prefer split windows instead of tabs
-    	" --- tabnew
-    	" --- setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
-    	" --- silent put=result
-		" --- syntax keyword testKeyword div
-		" --- highlight link testKeyword img
-  	endif
-
-	" --- new
-	" --- setlocal buftype=nofile
-	" --- setlocal noswapfile
-
-	" --- echo "HI"
-	" --- :echo l:result
-	" --- let json = JSON#parse(l:result)
-	" --- for id in json
-	"	--- echo id." - "
-	" --- endfor
-	" --- echo l:result
-
-	call snoo#util#highlight()
-endfunction
+scriptencoding utf-8
+set encoding=utf-8
 
 function! GetSubreddit(...)
 	let l:sub = "All"
@@ -59,16 +11,70 @@ function! GetSubreddit(...)
 	endif
 	let l:url = "https://www.reddit.com/r/"
 	let l:url .= l:sub
-	let l:url .= ".json"
-	let l:reddit_username = "AyXiit34"
+	let l:postkind = "hot"
+	
+	if(a:0 > 1)
+		if(a:2 == "top")
+			let l:url .= "/top.json?t=all"
+			let l:postkind = "top"
+		elseif(a:2 == "new")
+			let l:url .= "/new.json"
+			let l:postkind = "new"
+		endif
+	else
+		let l:url .= ".json"
+	endif
 
-	echo "Loading /r/".l:sub." hot posts..."
-	let result = system('curl -s '.l:url.' -H "User-Agent: Snoo.vim, used by /u/'.l:reddit_username.'"')
+	echo "Loading /r/".l:sub." ".l:postkind." posts..."
+
+	let l:reddit_username = "AyXiit34"
+	let result = system('curl -s -L '.l:url.' -H "User-Agent: Snoo.vim, used by /u/'.l:reddit_username.'"')
 	sleep 2000m
 	if empty(result)
 		echoerr "No output"
 	else
-		call snoo#util#parseSubreddit(result, l:sub)
+		call snoo#parser#parseSubreddit(result, l:sub)
+	endif
+
+	call snoo#util#highlight()
+endfunction
+
+function! SearchSubreddit(...)
+	let l:sub = "All"
+	let l:search = ""
+	let l:sort = "relevance"
+	if(a:0 > 1)
+		let l:sub = a:1
+		let l:search = a:2
+	else
+		let l:search = a:1
+	endif
+	if(a:0 > 2)
+		if(a:3 == "top")
+			let l:sort = "top"
+		elseif(a:3 == "new")
+			let l:sort = "new"
+		elseif(a:3 == "self")
+			let l:search .= "&is_self=1"
+		endif
+	endif
+	let l:url = "https://www.reddit.com/r/"
+	let l:url .= l:sub
+	let l:url .= "/search.json?q="
+	let l:url .= l:search
+	let l:url .= "&restrict_sr=on&sort="
+	let l:url .= l:sort
+	let l:url .= "&t=all"
+
+	echo "Searching for posts containing the term '".l:search."' on /r/".l:sub
+
+	let l:reddit_username = "AyXiit34"
+	let result = system('curl -s -L "'.l:url.'" -H "User-Agent: Snoo.vim, used by /u/'.l:reddit_username.'"')
+	sleep 2000m
+	if empty(result)
+		echoerr "No output"
+	else
+		call snoo#parser#parseSubreddit(result, l:sub)
 	endif
 
 	call snoo#util#highlight()
@@ -87,7 +93,7 @@ function! GetPost()
 	if empty(result)
 		echoerr "No output"
 	else
-		call snoo#util#parsePost(result)
+		call snoo#parser#parsePost(result)
 	endif
 
 	call snoo#util#highlightPost()

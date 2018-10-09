@@ -1,7 +1,5 @@
 execute pathogen#infect()
 
-set pythondll=/c/Windows/System32/python27.dll
-
 filetype plugin indent on
 syntax on
 set background=light
@@ -16,13 +14,15 @@ set softtabstop=0
 set noexpandtab
 set directory=~/.vim/swap,.
 set encoding=utf-8  " The encoding displayed.
-set fileencoding=utf-8  " The encoding written to file.
+"set fileencoding=utf-8  " The encoding written to file.
 set fileformats=dos,unix
 set updatetime=250
 set hlsearch
 set nofixendofline
 set incsearch
 set number
+set autoindent
+set smartindent
 
 "if !has('gui_running')
 "  set t_Co=256
@@ -68,6 +68,7 @@ nnoremap <C-Left> <C-W>10<
 " Pressing Enter after a search disable highligh
 nnoremap <CR> :noh<CR><CR>
 nnoremap <leader>s :source ~/.vimrc<CR>
+autocmd VimEnter * source ~/.vimrc
 
 " Ctrl + A to select the whole file content
 nnoremap <C-a> ggvG$
@@ -140,10 +141,8 @@ let twitvim_browser_cmd = 'start chrome'
 let twitvim_count = 150
 nnoremap <Leader>1 :FriendsTwitter<CR>
 nnoremap <Leader>2 :MentionsTwitter<CR>
-nnoremap <Leader>3 :UserTwitter quiquiz27<CR>
 nnoremap <Leader>5 :PosttoTwitter<CR>
 nnoremap <Leader>8 :BPosttoTwitter<CR>
-nnoremap <Leader>4 :UserTwitter crackmeupbot<CR>
 
 " Lightline config: Displays the erros found by ale and the current branch
 let g:lightline = {}
@@ -171,16 +170,28 @@ let g:lightline.active = {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ }
+"let g:lightline.colorscheme = 'blayu'
 
 " Leader + e to display the errors
 nnoremap <Leader>e :lopen<CR>
 
 " ctags.exe path
-let g:tagbar_ctags_bin = '/c/Users/arnaud.romain/Documents/ctags.exe'
+let g:tagbar_ctags_bin = '~/Documents/ctags.exe'
 
 " F12 to toggle tagbar
 nmap <F12> :TagbarToggle<CR>
 
 " Lead + h to comment HTML, Lead + : (same key as /) to comment any language with /* */
-vnoremap <Leader>h x o<!--<ENTER>!--><ESC>P
-vnoremap <Leader>: x o/*<ENTER>*/<ESC>P
+vnoremap <Leader>h xO<!--<ENTER>!--><ESC>P
+vnoremap <Leader>: xO/*<ENTER>*/<ESC>P
+
+" Lead + T to load Tetris
+nnoremap <Leader>T :source ~/.vim/bundle/TeTrIs.vim/plugin/TeTris.vim<CR>
+
+set completefunc=emoji#complete
+
+" Snoo.vim
+nnoremap <Leader>3 :Snoo nichijou<CR>
+nnoremap <Leader>4 :Snoo madeinabyss<CR>
+nnoremap <Leader>6 :Snoo dota2<CR>
+nnoremap <Leader>7 :Snoo edmproduction<CR>
