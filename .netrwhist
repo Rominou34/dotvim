@@ -1,5 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =9
 let g:netrw_dirhist_1='/c/UwAmp/www/lmbv7_new/lmbV7/www/core/Controllers/Compta'
 let g:netrw_dirhist_2='/c/UwAmp/www/lmbv7_new/lmbV7/www/view/mvc/Article/Standard/javascript/EditionMasse/angular'
 let g:netrw_dirhist_3='/c/UwAmp/www/lmbv7_new/lmbV7/www/view/mvc/Contact/Standard/phtml/Visualisation/Popup'
+let g:netrw_dirhist_4='/c/Users/arnaud.romain/Desktop'
+let g:netrw_dirhist_5='/c/UwAmp/www/ak-click-n-collect/app/Bundles/ClickNCollect/routes'
+let g:netrw_dirhist_6='/c/UwAmp/www/ak-click-n-collect/app/Bundles/ClickNCollect'
+let g:netrw_dirhist_7='/c/UwAmp/www/ak-click-n-collect/app/Bundles'
+let g:netrw_dirhist_8='/c/UwAmp/www/ak-click-n-collect/app/Bundles/ClickNCollect'
+let g:netrw_dirhist_9='/c/UwAmp/www/ak-click-n-collect/app/Bundles/ClickNCollect/views'

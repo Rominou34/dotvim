@@ -103,3 +103,12 @@
 [submodule "bundle/vim-php-manual"]
 	path = bundle/vim-php-manual
 	url = https://github.com/alvan/vim-php-manual
+[submodule "bundle/vim-showmarks"]
+	path = bundle/vim-showmarks
+	url = https://github.com/jacquesbh/vim-showmarks.git
+[submodule "bundle/vim-stackoverflow"]
+	path = bundle/vim-stackoverflow
+	url = https://github.com/hienvd/vim-stackoverflow
+[submodule "bundle/vim-g"]
+	path = bundle/vim-g
+	url = https://github.com/szw/vim-g.git
