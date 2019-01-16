@@ -23,6 +23,24 @@ set incsearch
 set number
 set autoindent
 set smartindent
+" Set the working directory to wherever the open file lives
+set autochdir
+
+" Autocompletion
+set omnifunc=syntaxcomplete#Complete
+au FileType php setl ofu=phpcomplete#CompletePHP
+au FileType ruby,eruby setl ofu=rubycomplete#Complete
+au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
+au FileType c setl ofu=ccomplete#CompleteCpp
+au FileType css setl ofu=csscomplete#CompleteCSS
+
+" Show file options above the command line
+set wildmenu
+
+" Don't offer to open certain files/directories
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
+set wildignore+=*.pdf,*.psd
+set wildignore+=node_modules/*,bower_components/*
 
 "if !has('gui_running')
 "  set t_Co=256
@@ -68,7 +86,7 @@ nnoremap <C-Left> <C-W>10<
 " Pressing Enter after a search disable highligh
 nnoremap <CR> :noh<CR><CR>
 nnoremap <leader>s :source ~/.vimrc<CR>
-autocmd VimEnter * source ~/.vimrc
+autocmd VimEnter * source ~/.vimrc | DoShowMarks!
 
 " Ctrl + A to select the whole file content
 nnoremap <C-a> ggvG$
@@ -81,6 +99,8 @@ nnoremap <Leader>p :cd %:p:h<CR>
 
 " Space + w to close the file
 nnoremap <Leader>w :q!<CR>
+
+inoremap jj <ESC>
 
 "
 " PLUGINS CONFIGURATION
@@ -114,6 +134,8 @@ hi IndentGuidesOdd ctermbg=white
 " Startify bookmarks
 let g:startify_bookmarks = [
       \ { 'v': '~/.vimrc' },
+	  \ { 't': '~/Desktop/vim_tips.md' },
+	  \ { 'J': '~/Desktop/japanese_notes.md' },
 	  \ { 'd': '/c/uwAmp/www/lmbv7_new/lmbv7/www/debugar.log' },
 	  \ { 'l': '/c/uwAmp/www/lmbv7_new/lmbv7/www/' },
 	  \ { 'a': '/c/uwAmp/www/lmbv7_new/lmbv7/www/common/javascript/angular/components/searchEngine/' },
@@ -143,6 +165,21 @@ nnoremap <Leader>1 :FriendsTwitter<CR>
 nnoremap <Leader>2 :MentionsTwitter<CR>
 nnoremap <Leader>5 :PosttoTwitter<CR>
 nnoremap <Leader>8 :BPosttoTwitter<CR>
+
+" ALE linters
+let g:ale_linters = {
+	  \  'javascript': ['eslint']
+	  \ }
+
+"Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " Lightline config: Displays the erros found by ale and the current branch
 let g:lightline = {}
@@ -174,6 +211,8 @@ let g:lightline.active = {
 
 " Leader + e to display the errors
 nnoremap <Leader>e :lopen<CR>
+" Leader + j for JSHint
+nnoremap <Leader>j :JSHint<CR>
 
 " ctags.exe path
 let g:tagbar_ctags_bin = '~/Documents/ctags.exe'
@@ -195,3 +234,12 @@ nnoremap <Leader>3 :Snoo nichijou<CR>
 nnoremap <Leader>4 :Snoo madeinabyss<CR>
 nnoremap <Leader>6 :Snoo dota2<CR>
 nnoremap <Leader>7 :Snoo edmproduction<CR>
+
+"Goyo size
+let g:goyo_width = 120
+
+" Limelight
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_guifg = 'DarkGray'
+map <F6> :Limelight<CR>:Goyo<CR>
+nmap <Leader>l :Limelight!!<CR>
