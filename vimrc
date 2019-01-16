@@ -85,7 +85,7 @@ nnoremap <C-Left> <C-W>10<
 
 " Pressing Enter after a search disable highligh
 nnoremap <CR> :noh<CR><CR>
-nnoremap <leader>s :source ~/.vimrc<CR>
+nnoremap <Leader>s :source ~/.vimrc<CR>
 autocmd VimEnter * source ~/.vimrc | DoShowMarks!
 
 " Ctrl + A to select the whole file content
@@ -171,15 +171,19 @@ let g:ale_linters = {
 	  \  'javascript': ['eslint']
 	  \ }
 
-"Syntastic
+" Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
+let g:syntastic_mode = "passive"
+
+" Leader + S to run Syntastic
+nnoremap <Leader>S :SyntasticCheck<CR>
 
 " Lightline config: Displays the erros found by ale and the current branch
 let g:lightline = {}
